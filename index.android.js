@@ -15,7 +15,6 @@ import React, {
 var singleshop =  React.createClass({
 
   render:function() {
-
     return (
       <View style={styles.container}>
         <View style={styles.logo_con}>
@@ -53,9 +52,7 @@ var singleshop =  React.createClass({
              </View>
            </View>
         </View>
-        <View style={styles.footer}>
-
-        </View>
+        
       </View>
     );
   }
