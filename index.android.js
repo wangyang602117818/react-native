@@ -14,6 +14,8 @@ import React, {
   Alert,
   View
 } from 'react-native';
+var Delivery = require('./delivery');
+var dine = require('./dine');
 //默认logo组件
 class DefaultLogo extends Component{
   render(){
@@ -89,30 +91,38 @@ var singleshop =  React.createClass({
   render:function() {
     return (
       <Navigator
-        initialRoute = {{ message: 'First Scene', }}
+        initialRoute = {{ id: 'start', }}
         renderScene = {this.renderScene}
-        configureScene = {()=>{
+        configureScene = {(route)=>{
+           if(route.SceneConfig){
+              return route.SceneConfig;
+           }
            return Navigator.SceneConfigs.FloatFromBottom;
         }}
       />
     )
   },
   renderScene:function(route, nav){
-      return (
-        <View style={styles.container}>
-          <DefaultLogo/>
-          <DefaultBanner/>
-          <WaiMai
-            onPress={()=>{
-              Alert.alert('title','data')
-            }}
-          />
-          <View style={styles.additional_con}>
-            <AdditionalPay/>
-            <AdditionalDine/>
+    switch(route.id){
+      case 'delivery':
+        return <Delivery navigator={nav}/>
+      default:
+        return (
+          <View style={styles.container}>
+            <DefaultLogo/>
+            <DefaultBanner/>
+            <WaiMai
+              onPress={()=>{
+                nav.push({id:'delivery',SceneConfig:Navigator.SceneConfigs.PushFromRight})
+              }}
+            />
+            <View style={styles.additional_con}>
+              <AdditionalPay/>
+              <AdditionalDine/>
+            </View>
           </View>
-        </View>
-      )
+        )
+    }
   }
 })
 
