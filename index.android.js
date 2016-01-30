@@ -7,22 +7,38 @@ import React, {
   AppRegistry,
   Component,
   StyleSheet,
+  Navigator,
   Image,
   Text,
+  TouchableOpacity,
+  Alert,
   View
 } from 'react-native';
-
-var singleshop =  React.createClass({
-
-  render:function() {
+//默认logo组件
+class DefaultLogo extends Component{
+  render(){
+    return(
+      <View style={styles.logo_con}>
+        <Image style={styles.logo_img} source={require('./images/defaultlogo.jpg')}></Image>
+      </View>
+    )
+  }
+}
+//默认banner
+class DefaultBanner extends Component{
+  render(){
+    return(
+      <View style={styles.banner_con}>
+        <Image style={styles.banner_img} source={require('./images/defaultbanner.jpg')}></Image>
+      </View>
+    )
+  }
+}
+//外卖组件
+class WaiMai extends Component{
+  render(){
     return (
-      <View style={styles.container}>
-        <View style={styles.logo_con}>
-          <Image style={styles.logo_img} source={require('./images/defaultlogo.jpg')}></Image>
-        </View>
-        <View style={styles.banner_con}>
-          <Image style={styles.banner_img} source={require('./images/defaultbanner.jpg')}></Image>
-        </View>
+      <TouchableOpacity onPress={this.props.onPress}>
         <View style={styles.waimai_bg}>
           <View style={styles.tip_con}>
             <Text style={styles.tip_biger}>外卖订餐</Text>
@@ -32,29 +48,71 @@ var singleshop =  React.createClass({
             <Image style={styles.single_logo} source={require('./images/wm.png')}></Image>
           </View>
         </View>
-        <View style={styles.additional_con}>
-           <View style={styles.pay_con}>
-              <View style={styles.tip_con}>
-                <Text style={styles.tip_biger}>支付</Text>
-                <Text style={styles.tip_smaller}>一键快捷支付</Text>
-              </View>
-              <View style={styles.img_con}>
-                <Image style={styles.single_logo} source={require('./images/zf.png')}></Image>
-              </View>
-           </View>
-           <View style={styles.dine_con}>
-             <View style={styles.tip_con}>
-               <Text style={styles.tip_biger}>店内点餐</Text>
-               <Text style={styles.tip_smaller}>轻轻一点,马上吃饭</Text>
-             </View>
-             <View style={styles.img_con}>
-               <Image style={styles.single_logo} source={require('./images/dc.png')}></Image>
-             </View>
-           </View>
-        </View>
-        
+      </TouchableOpacity>
+    )
+  }
+}
+//支付组件
+class AdditionalPay extends Component{
+  render(){
+    return (
+      <View style={styles.pay_con}>
+         <View style={styles.tip_con}>
+           <Text style={styles.tip_biger}>支付</Text>
+           <Text style={styles.tip_smaller}>一键快捷支付</Text>
+         </View>
+         <View style={styles.img_con}>
+           <Image style={styles.single_logo} source={require('./images/zf.png')}></Image>
+         </View>
       </View>
-    );
+    )
+  }
+}
+//堂食
+class AdditionalDine extends Component{
+  render(){
+    return (
+      <View style={styles.dine_con}>
+        <View style={styles.tip_con}>
+          <Text style={styles.tip_biger}>店内点餐</Text>
+          <Text style={styles.tip_smaller}>轻轻一点,马上吃饭</Text>
+        </View>
+        <View style={styles.img_con}>
+          <Image style={styles.single_logo} source={require('./images/dc.png')}></Image>
+        </View>
+      </View>
+    )
+  }
+}
+//入口
+var singleshop =  React.createClass({
+  render:function() {
+    return (
+      <Navigator
+        initialRoute = {{ message: 'First Scene', }}
+        renderScene = {this.renderScene}
+        configureScene = {()=>{
+           return Navigator.SceneConfigs.FloatFromBottom;
+        }}
+      />
+    )
+  },
+  renderScene:function(route, nav){
+      return (
+        <View style={styles.container}>
+          <DefaultLogo/>
+          <DefaultBanner/>
+          <WaiMai
+            onPress={()=>{
+              Alert.alert('title','data')
+            }}
+          />
+          <View style={styles.additional_con}>
+            <AdditionalPay/>
+            <AdditionalDine/>
+          </View>
+        </View>
+      )
   }
 })
 
@@ -113,8 +171,8 @@ const styles = StyleSheet.create({
   },
   additional_con:{
     height:80,
-    marginLeft:5,
-    marginRight:5,
+    marginLeft:4,
+    marginRight:4,
     flexDirection:'row',
   },
   pay_con:{
