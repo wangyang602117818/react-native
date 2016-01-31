@@ -97,32 +97,33 @@ var singleshop =  React.createClass({
            if(route.SceneConfig){
               return route.SceneConfig;
            }
-           return Navigator.SceneConfigs.FloatFromBottom;
+           return Navigator.SceneConfigs.PushFromRight;
         }}
       />
     )
   },
   renderScene:function(route, nav){
-    switch(route.id){
-      case 'delivery':
-        return <Delivery navigator={nav}/>
-      default:
-        return (
-          <View style={styles.container}>
-            <DefaultLogo/>
-            <DefaultBanner/>
-            <WaiMai
-              onPress={()=>{
-                nav.push({id:'delivery',SceneConfig:Navigator.SceneConfigs.PushFromRight})
-              }}
-            />
-            <View style={styles.additional_con}>
-              <AdditionalPay/>
-              <AdditionalDine/>
-            </View>
-          </View>
-        )
-    }
+    return <Delivery navigator={nav}/>
+    // switch(route.id){
+    //   case 'delivery':
+    //     return <Delivery navigator={nav}/>
+    //   default:
+    //     return (
+    //       <View style={styles.container}>
+    //         <DefaultLogo/>
+    //         <DefaultBanner/>
+    //         <WaiMai
+    //           onPress={()=>{
+    //             nav.push({id:'delivery'})
+    //           }}
+    //         />
+    //         <View style={styles.additional_con}>
+    //           <AdditionalPay/>
+    //           <AdditionalDine/>
+    //         </View>
+    //       </View>
+    //     )
+    // }
   }
 })
 
@@ -130,8 +131,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EEF2F5',
-    borderWidth:1,
-    borderColor:'red',
+    // borderWidth:1,
+    // borderColor:'red',
   },
   logo_con:{
     alignItems:'flex-start',
