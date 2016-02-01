@@ -12,14 +12,23 @@ import React, {
   View
 } from 'react-native';
 
+class BackButton extends Component{
+  render(){
+    return (
+      <TouchableOpacity onPress={this.props._onPress}>
+         <View style={styles.back_con}>
+            <Image source={require('./images/back.png')}></Image>
+         </View>
+      </TouchableOpacity>
+    )
+  }
+}
 //
 class Title extends Component {
    render(){
      return(
        <View style={styles.title}>
-         <View style={styles.back_con}>
-           <Image source={require('./images/back.png')}></Image>
-         </View>
+        <BackButton _onPress={()=>{this.props.navigator.pop()}}/>
          <View style={styles.supplier_text_con}>
            <Text style={styles.supplier_text}>单店演示</Text>
          </View>
@@ -70,14 +79,6 @@ var delivery = React.createClass({
               {"id":13,"dish_name":"凉菜2","price":12,"pic":""}
             ]
     },
-    _onPressButton:function(){
-       const { navigator } = this.props;
-       if(navigator){
-        navigator.pop();
-       }else{
-        Alert.alert('title','error');
-       }
-    },
     _renderMenuRow:function(rowData, sectionID: number, rowID: number){
       if(rowID==0){
         return(
@@ -103,7 +104,7 @@ var delivery = React.createClass({
     render:function(){
         return(
           <View style={styles.container}>
-            <Title/>
+            <Title navigator={this.props.navigator}/>
             <Location/>
             <View style={styles.main}>
               <View style={styles.menu_con}>
@@ -149,11 +150,15 @@ var styles = StyleSheet.create({
      flex:1,
      justifyContent:'center',
      paddingLeft:5,
+     borderColor:'red',
+     borderWidth:1
    },
    supplier_text_con:{
      justifyContent:'center',
      alignItems:'center',
      flex:2,
+     borderColor:'red',
+     borderWidth:1
    },
    supplier_text:{
      fontSize:16,
@@ -163,6 +168,8 @@ var styles = StyleSheet.create({
      alignItems:'flex-end',
      paddingRight:10,
      justifyContent:'center',
+     borderWidth:1,
+     borderColor:'red'
    },
    location_con:{
      flexDirection:'row',

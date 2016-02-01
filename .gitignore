@@ -21,7 +21,6 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-android/gradle/wrapper/gradle-wrapper.properties
 # Android/IJ
 #
 .idea

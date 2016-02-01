@@ -103,27 +103,27 @@ var singleshop =  React.createClass({
     )
   },
   renderScene:function(route, nav){
-    return <Delivery navigator={nav}/>
-    // switch(route.id){
-    //   case 'delivery':
-    //     return <Delivery navigator={nav}/>
-    //   default:
-    //     return (
-    //       <View style={styles.container}>
-    //         <DefaultLogo/>
-    //         <DefaultBanner/>
-    //         <WaiMai
-    //           onPress={()=>{
-    //             nav.push({id:'delivery'})
-    //           }}
-    //         />
-    //         <View style={styles.additional_con}>
-    //           <AdditionalPay/>
-    //           <AdditionalDine/>
-    //         </View>
-    //       </View>
-    //     )
-    // }
+    // return <Delivery navigator={nav}/>
+    switch(route.id){
+      case 'delivery':
+        return <Delivery navigator={nav}/>
+      default:
+        return (
+          <View style={styles.container}>
+            <DefaultLogo/>
+            <DefaultBanner/>
+            <WaiMai
+              onPress={()=>{
+                nav.push({id:'delivery'})
+              }}
+            />
+            <View style={styles.additional_con}>
+              <AdditionalPay/>
+              <AdditionalDine/>
+            </View>
+          </View>
+        )
+    }
   }
 })
 
