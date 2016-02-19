@@ -1,0 +1,26 @@
+[
+  {
+   "category_name":"凉菜",
+   "dish_list":[
+        {"id":12,"dish_name":"凉菜1","price":12.3,"pic":""},
+	{"id":13,"dish_name":"凉菜2","price":12,"pic":""},
+	{"id":14,"dish_name":"凉菜2","price":12,"pic":""}
+   ]
+  },
+  {
+   "category_name":"主食",
+   "dish_list":[
+        {"id":22,"dish_name":"主食1","price":17,"pic":""},
+	{"id":23,"dish_name":"主食2","price":16,"pic":""},
+	{"id":24,"dish_name":"主食2","price":15,"pic":""}
+   ]
+  },
+  {
+   "category_name":"面食",
+   "dish_list":[
+        {"id":32,"dish_name":"面食1","price":3.3,"pic":""},
+	{"id":33,"dish_name":"面食2","price":5.8,"pic":""},
+	{"id":34,"dish_name":"面食2","price":4.56,"pic":""}
+   ]
+  }
+]

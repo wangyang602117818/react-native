@@ -1,6 +1,5 @@
 'use strict';
 import React, {
-  AppRegistry,
   Component,
   StyleSheet,
   Navigator,
@@ -12,23 +11,18 @@ import React, {
   View
 } from 'react-native';
 
-class BackButton extends Component{
-  render(){
-    return (
-      <TouchableOpacity onPress={this.props._onPress}>
-         <View style={styles.back_con}>
-            <Image source={require('./images/back.png')}></Image>
-         </View>
-      </TouchableOpacity>
-    )
-  }
-}
+var styles = require('./styles/delivery.css');  //样式文件
+var dish_source_list = require('./dish_list');   //菜单数据
 //
 class Title extends Component {
    render(){
      return(
        <View style={styles.title}>
-        <BackButton _onPress={()=>{this.props.navigator.pop()}}/>
+         <View style={styles.back_con}>
+            <TouchableOpacity onPress={()=>{this.props.navigator.pop()}}>
+              <Image source={require('./images/back.png')}></Image>
+            </TouchableOpacity>
+         </View>
          <View style={styles.supplier_text_con}>
            <Text style={styles.supplier_text}>单店演示</Text>
          </View>
@@ -55,44 +49,30 @@ class Location extends Component{
    }
 }
 var delivery = React.createClass({
-   getInitialState: function() {
+    getInitialState: function() {
       var dish_m = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       var dish_l = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       return {
-        dish_menu: dish_m.cloneWithRows(this._getMenu()),
+        menu_list: dish_m.cloneWithRows(this._getMenuList()),
         dish_list: dish_l.cloneWithRows(this._getDishList())
       };
     },
-    _getMenu:function(){
-      return [{"id":12,"name":"凉菜"},
-              {"id":13,"name":"热菜"},
-              {"id":14,"name":"面食"}
-             ];
+    _getMenuList: function(){
+      var menu_list = [];
+      for(var i = 0;i < dish_source_list.length; i++){
+          menu_list.push({"category_name" : dish_source_list[i].category_name , "checked" : "0"});
+      }
+      return menu_list;
     },
-    _getDishList:function(){
-      return [{"id":12,"dish_name":"凉菜1","price":12.3,"pic":""},
-              {"id":13,"dish_name":"凉菜2","price":12,"pic":""},
-              {"id":13,"dish_name":"凉菜2","price":12,"pic":""},
-              {"id":13,"dish_name":"凉菜2","price":12,"pic":""},
-              {"id":13,"dish_name":"凉菜2","price":12,"pic":""},
-              {"id":13,"dish_name":"凉菜2","price":12,"pic":""},
-              {"id":13,"dish_name":"凉菜2","price":12,"pic":""}
-            ]
+    _getDishList: function(){
+      return dish_source_list;
     },
     _renderMenuRow:function(rowData, sectionID: number, rowID: number){
-      if(rowID==0){
-        return(
-          <View style={[styles.menu_item,styles.menu_item_on]}>
-            <Text>{rowData.name}</Text>
-          </View>
-        )
-      }else{
         return(
           <View style={styles.menu_item}>
-            <Text>{rowData.name}</Text>
+            <Text>{rowData.category_name}</Text>
           </View>
         )
-      }
     },
     _renderDishRow:function(rowData, sectionID: number, rowID: number){
       return(
@@ -100,6 +80,9 @@ var delivery = React.createClass({
           <Text>{rowData.id}</Text>
         </View>
       )
+    },
+    _renderSectionHeader:function(sectionData: string, sectionID: string) {
+
     },
     render:function(){
         return(
@@ -109,7 +92,7 @@ var delivery = React.createClass({
             <View style={styles.main}>
               <View style={styles.menu_con}>
                 <ListView
-                dataSource={this.state.dish_menu}
+                dataSource={this.state.menu_list}
                 renderRow={this._renderMenuRow}
                 >
                 </ListView>
@@ -120,6 +103,7 @@ var delivery = React.createClass({
                 </View>
                 <ListView
                     dataSource={this.state.dish_list}
+
                     renderRow={this._renderDishRow}>
                 </ListView>
               </View>
@@ -128,112 +112,8 @@ var delivery = React.createClass({
         )
     },
     componentDidMount:function(){
-
+        // Alert.alert(dish_list[0].category_name);
     }
-})
-
-var styles = StyleSheet.create({
-   container:{
-     flex:1,
-   },
-   text:{
-     fontSize:12,
-   },
-   title:{
-     flexDirection:'row',
-     backgroundColor:'#FAFAFA',
-     height:35,
-     borderBottomWidth:1,
-     borderBottomColor:'#F2F1E7',
-   },
-   back_con:{
-     flex:1,
-     justifyContent:'center',
-     paddingLeft:5,
-     borderColor:'red',
-     borderWidth:1
-   },
-   supplier_text_con:{
-     justifyContent:'center',
-     alignItems:'center',
-     flex:2,
-     borderColor:'red',
-     borderWidth:1
-   },
-   supplier_text:{
-     fontSize:16,
-   },
-   supplier_con:{
-     flex:1,
-     alignItems:'flex-end',
-     paddingRight:10,
-     justifyContent:'center',
-     borderWidth:1,
-     borderColor:'red'
-   },
-   location_con:{
-     flexDirection:'row',
-     height:28,
-     backgroundColor:'#FFFCDD',
-     paddingRight:10,
-     paddingLeft:5,
-     borderBottomWidth:1,
-     borderBottomColor:'#F2F1E7',
-   },
-   location_left:{
-     flex:2,
-     flexDirection:'row',
-     justifyContent:'flex-start',
-     alignItems:'center',
-   },
-   location_edit:{
-     flex:1,
-     justifyContent:'center',
-     alignItems:'flex-end',
-   },
-   main:{
-     flex:1,
-     flexDirection:'row',
-   },
-   menu_con:{
-     flex:1,
-     padding:-1,   //效果,覆盖边框
-     borderRightWidth:1,
-     borderColor:'#EBEBEB'
-   },
-   menu_item:{
-     alignItems:'center',
-     justifyContent:'center',
-     height:50,
-     borderBottomWidth:1,
-     borderBottomColor:'#E6E6E6',
-   },
-   menu_item_on:{
-     borderLeftWidth:4,
-     borderLeftColor:'#FF5A00',
-     backgroundColor:'#fff',
-   },
-   dish_con:{
-     flex:4,
-     backgroundColor:'#fff',
-   },
-   dish_title:{
-     height:25,
-     backgroundColor:'#EEEEEE',
-     borderBottomWidth:1,
-     borderLeftWidth:1,
-     borderColor:'#E5E5E5',
-     justifyContent:'center',
-     paddingLeft:5,
-   },
-   dish_item:{
-     borderColor:'#EEEEEE',
-     borderBottomWidth:1,
-     marginLeft:15,
-     marginRight:5,
-     height:80,
-     justifyContent:'center',
-   }
 })
 
 

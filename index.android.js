@@ -14,6 +14,7 @@ import React, {
   Alert,
   View
 } from 'react-native';
+var styles = require('./styles/index.android.css');  //样式文件
 var Delivery = require('./delivery');
 var dine = require('./dine');
 //默认logo组件
@@ -103,112 +104,27 @@ var singleshop =  React.createClass({
     )
   },
   renderScene:function(route, nav){
-    // return <Delivery navigator={nav}/>
-    switch(route.id){
-      case 'delivery':
-        return <Delivery navigator={nav}/>
-      default:
-        return (
-          <View style={styles.container}>
-            <DefaultLogo/>
-            <DefaultBanner/>
-            <WaiMai
-              onPress={()=>{
-                nav.push({id:'delivery'})
-              }}
-            />
-            <View style={styles.additional_con}>
-              <AdditionalPay/>
-              <AdditionalDine/>
-            </View>
-          </View>
-        )
-    }
+    return <Delivery navigator={nav}/>
+    // switch(route.id){
+    //   case 'delivery':
+    //     return <Delivery navigator={nav}/>
+    //   default:
+    //     return (
+    //       <View style={styles.container}>
+    //         <DefaultLogo/>
+    //         <DefaultBanner/>
+    //         <WaiMai
+    //           onPress={()=>{
+    //             nav.push({id:'delivery'})
+    //           }}
+    //         />
+    //         <View style={styles.additional_con}>
+    //           <AdditionalPay/>
+    //           <AdditionalDine/>
+    //         </View>
+    //       </View>
+    //     )
+    // }
   }
 })
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#EEF2F5',
-    // borderWidth:1,
-    // borderColor:'red',
-  },
-  logo_con:{
-    alignItems:'flex-start',
-  },
-  logo_img:{
-    height:30,
-    width:80,
-    resizeMode:'stretch',
-  },
-  banner_con:{
-
-  },
-  banner_img:{
-    height:95,
-    width:360,    //这里不科学
-    resizeMode:'stretch',
-  },
-  waimai_bg:{
-    backgroundColor:'#FF5844',
-    margin:5,
-    height:80,
-    borderRadius:3,
-    flexDirection:'row',
-  },
-  tip_con:{
-    flex:5,
-    justifyContent:'flex-end',
-    padding:5,
-  },
-  tip_biger:{
-    color:'#FFF1EF'
-  },
-  tip_smaller:{
-    color:'#FFF1EF',
-    fontSize:11
-  },
-  img_con:{
-    flex:3,
-    alignItems:'flex-end',
-    justifyContent:'center',
-    padding:3,
-  },
-  single_logo:{
-    width:70,
-    height:50,
-    resizeMode:'stretch'
-  },
-  additional_con:{
-    height:80,
-    marginLeft:4,
-    marginRight:4,
-    flexDirection:'row',
-  },
-  pay_con:{
-    flex:1,
-    backgroundColor:'#5DC549',
-    borderRadius:3,
-    flexDirection:'row',
-    borderWidth:1,
-    borderColor:'#fff',
-  },
-  dine_con:{
-    flex:1,
-    backgroundColor:'#F7B540',
-    borderRadius:3,
-    marginLeft:5,
-    flexDirection:'row',
-    borderWidth:1,
-    borderColor:'#fff',
-  },
-  footer:{
-    height:45,
-    // alignSelf:'center',
-    backgroundColor:'#323232',
-
-  }
-});
-
 AppRegistry.registerComponent('singleshop', () => singleshop);
