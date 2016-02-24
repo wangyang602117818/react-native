@@ -6,6 +6,7 @@ import React, {
   Image,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Alert,
   ListView,
   View
@@ -13,6 +14,35 @@ import React, {
 
 var styles = require('./styles/delivery.css');  //样式文件
 var dish_source_list = require('./dish_list');   //菜单数据
+
+var MenuItem = React.createClass({
+    getInitialState:function(){
+       return{
+          rowid:0
+       }
+    },
+    _onPressMenu:function(rowid){
+        alert(typeof this.props.refs);
+        // this.setState({rowid:rowid});
+    },
+    render:function(){
+      var rowid = this.props.rowid  //当前渲染的那一行;
+       return(
+        <TouchableWithoutFeedback onPress={()=>{this._onPressMenu(rowid)}}>
+           {
+             rowid == this.state.rowid?
+                 <View style={[styles.menu_item,styles.menu_item_on]} ref={"menu"+rowid}>
+                   <Text>{this.props.rowdata.category_name}</Text>
+                 </View>
+             :
+                 <View style={[styles.menu_item]}>
+                   <Text>{this.props.rowdata.category_name}</Text>
+                 </View>
+           }
+         </TouchableWithoutFeedback>
+       )
+    }
+});
 //
 class Title extends Component {
    render(){
@@ -57,24 +87,26 @@ var delivery = React.createClass({
         dish_list: dish_l.cloneWithRows(this._getDishList())
       };
     },
-    _getMenuList: function(){
+    _getMenuList: function(){  //获取菜单
       var menu_list = [];
       for(var i = 0;i < dish_source_list.length; i++){
+          if(i==0){
+            menu_list.push({"category_name" : dish_source_list[i].category_name , "checked" : "1"});
+            continue;
+          }
           menu_list.push({"category_name" : dish_source_list[i].category_name , "checked" : "0"});
       }
       return menu_list;
     },
-    _getDishList: function(){
+    _getDishList: function(){   //获取菜品列表
       return dish_source_list;
     },
-    _renderMenuRow:function(rowData, sectionID: number, rowID: number){
+    _renderMenuRow:function(rowData, sectionID, rowID){  //渲染菜单栏
         return(
-          <View style={styles.menu_item}>
-            <Text>{rowData.category_name}</Text>
-          </View>
+          <MenuItem rowdata={rowData} rowid={rowID}/>
         )
     },
-    _renderDishRow:function(rowData, sectionID: number, rowID: number){
+    _renderDishRow:function(rowData, sectionID: number, rowID: number){  //渲染菜品栏
       return(
         <View style={styles.dish_item}>
           <Text>{rowData.id}</Text>
@@ -103,7 +135,6 @@ var delivery = React.createClass({
                 </View>
                 <ListView
                     dataSource={this.state.dish_list}
-
                     renderRow={this._renderDishRow}>
                 </ListView>
               </View>
