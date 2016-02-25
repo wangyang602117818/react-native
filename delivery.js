@@ -15,34 +15,6 @@ import React, {
 var styles = require('./styles/delivery.css');  //样式文件
 var dish_source_list = require('./dish_list');   //菜单数据
 
-var MenuItem = React.createClass({
-    getInitialState:function(){
-       return{
-          rowid:0
-       }
-    },
-    _onPressMenu:function(rowid){
-        alert(typeof this.props.refs);
-        // this.setState({rowid:rowid});
-    },
-    render:function(){
-      var rowid = this.props.rowid  //当前渲染的那一行;
-       return(
-        <TouchableWithoutFeedback onPress={()=>{this._onPressMenu(rowid)}}>
-           {
-             rowid == this.state.rowid?
-                 <View style={[styles.menu_item,styles.menu_item_on]} ref={"menu"+rowid}>
-                   <Text>{this.props.rowdata.category_name}</Text>
-                 </View>
-             :
-                 <View style={[styles.menu_item]}>
-                   <Text>{this.props.rowdata.category_name}</Text>
-                 </View>
-           }
-         </TouchableWithoutFeedback>
-       )
-    }
-});
 //
 class Title extends Component {
    render(){
@@ -82,9 +54,11 @@ var delivery = React.createClass({
     getInitialState: function() {
       var dish_m = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       var dish_l = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      var menuList = this._getMenuList();
+      var dishList = this._getDishList();
       return {
-        menu_list: dish_m.cloneWithRows(this._getMenuList()),
-        dish_list: dish_l.cloneWithRows(this._getDishList())
+        menu_dataSource: dish_m.cloneWithRows(menuList),
+        dish_dataSource: dish_l.cloneWithRows(dishList)
       };
     },
     _getMenuList: function(){  //获取菜单
@@ -103,8 +77,21 @@ var delivery = React.createClass({
     },
     _renderMenuRow:function(rowData, sectionID, rowID){  //渲染菜单栏
         return(
-          <MenuItem rowdata={rowData} rowid={rowID}/>
+          <TouchableWithoutFeedback onPress={()=>{this._onPressMenu(rowID)}}>
+            <View style={[styles.menu_item,rowData.checked=='1'?styles.menu_item_on:'']}>
+              <Text>{rowData.category_name}</Text>
+            </View>
+          </TouchableWithoutFeedback>
         )
+    },
+    _onPressMenu:function(rowID){
+        var newMenuList = this._getMenuList();
+        newMenuList.forEach(function(obj){obj.checked='0'});
+        newMenuList[rowID].checked='1';
+
+        this.setState({
+           menu_dataSource:this.state.menu_dataSource.cloneWithRows(newMenuList)
+        })
     },
     _renderDishRow:function(rowData, sectionID: number, rowID: number){  //渲染菜品栏
       return(
@@ -124,7 +111,7 @@ var delivery = React.createClass({
             <View style={styles.main}>
               <View style={styles.menu_con}>
                 <ListView
-                dataSource={this.state.menu_list}
+                dataSource={this.state.menu_dataSource}
                 renderRow={this._renderMenuRow}
                 >
                 </ListView>
@@ -134,7 +121,7 @@ var delivery = React.createClass({
                   <Text style={styles.text}>主食</Text>
                 </View>
                 <ListView
-                    dataSource={this.state.dish_list}
+                    dataSource={this.state.dish_dataSource}
                     renderRow={this._renderDishRow}>
                 </ListView>
               </View>
@@ -143,7 +130,7 @@ var delivery = React.createClass({
         )
     },
     componentDidMount:function(){
-        // Alert.alert(dish_list[0].category_name);
+        // Alert.alert(typeof this.refs);
     }
 })
 
