@@ -1,4 +1,5 @@
 var React = require('react-native');
+var {height, width} = React.Dimensions.get('window');  //设备的宽高
 const styles = React.StyleSheet.create({
   container: {
     flex: 1,

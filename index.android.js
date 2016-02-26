@@ -27,7 +27,7 @@ var singleshop =  React.createClass({
            if(route.SceneConfig){
               return route.SceneConfig;
            }
-           return Navigator.SceneConfigs.PushFromRight;
+           return Navigator.SceneConfigs.FadeAndroid;
         }}
       />
     )
@@ -35,8 +35,8 @@ var singleshop =  React.createClass({
   renderScene:function(route, nav){
      var Component = route.component;
      return(
-        // <Component navigator = {nav}/>
-        <Delivery navigator = {nav}/>
+        <Component navigator = {nav}/>
+        // <Delivery navigator = {nav}/>
      )
   }
 })
