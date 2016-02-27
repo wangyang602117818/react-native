@@ -1,12 +1,12 @@
 'use strict';
-import React, {
+import React,{
   Component,
   StyleSheet,
   Navigator,
   Image,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
   Alert,
   ListView,
   View
