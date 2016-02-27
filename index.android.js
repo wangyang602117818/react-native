@@ -27,7 +27,7 @@ var singleshop =  React.createClass({
            if(route.SceneConfig){
               return route.SceneConfig;
            }
-           return Navigator.SceneConfigs.PushFromRight;
+           return Navigator.SceneConfigs.FadeAndroid;
         }}
       />
     )
