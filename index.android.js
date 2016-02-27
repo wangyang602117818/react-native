@@ -12,10 +12,19 @@ import React, {
   Text,
   TouchableOpacity,
   Alert,
-  View
+  View,BackAndroid
 } from 'react-native';
 var LayoutIndex = require('./layoutindex');
 var Delivery = require('./delivery');  //调试这个页面
+
+var _navigator;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+    return true;
+  }
+  return false;
+});
 //入口
 var singleshop =  React.createClass({
   render:function() {
@@ -34,10 +43,13 @@ var singleshop =  React.createClass({
   },
   renderScene:function(route, nav){
      var Component = route.component;
+    _navigator = nav;
      return(
-        <Component navigator = {nav}/>
+        <Component navigator = {nav} route={route}/>
         // <Delivery navigator = {nav}/>
      )
   }
 })
+
+
 AppRegistry.registerComponent('singleshop', () => singleshop);

@@ -55,7 +55,7 @@ var LayoutIndex = React.createClass({
           <View style={styles.con}>
             <View style={styles.page_con}>
               <ScrollView>
-                <InitSubPage navigator={this.props.navigator}/>
+                <InitSubPage navigator={this.props.navigator} route={this.props.route}/>
               </ScrollView>
             </View>
             <View style={styles.tab_bar}>

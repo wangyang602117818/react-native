@@ -9,12 +9,11 @@ import React,{
   TouchableWithoutFeedback,
   Alert,
   ListView,
-  View
+  View,
 } from 'react-native';
 
 var styles = require('./styles/delivery.css');  //样式文件
 var dish_source_list = require('./dish_list');   //菜单数据
-
 //
 class Title extends Component {
    render(){
