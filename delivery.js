@@ -6,7 +6,7 @@ import React,{
   Image,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
   Alert,
   ListView,
   View
