@@ -36,7 +36,7 @@ class DefaultBanner extends Component{
 class WaiMai extends Component{
   render(){
     return (
-      <TouchableOpacity onPress={this.props.onPress}>
+      <TouchableOpacity onPress={this.props._onPress}>
         <View style={styles.waimai_bg}>
           <View style={styles.tip_con}>
             <Text style={styles.tip_biger}>外卖订餐</Text>
@@ -89,7 +89,7 @@ var Home = React.createClass({
        <View style={styles.container}>
          <DefaultLogo/>
          <DefaultBanner/>
-         <WaiMai onPress={()=>{this.props.navigator.push({name:'delivery',component:Delivery})}} />
+         <WaiMai _onPress={()=>{this.props.navigator.push({name:'delivery',component:Delivery})}} />
          <View style={styles.additional_con}>
            <AdditionalPay/>
            <AdditionalDine/>
